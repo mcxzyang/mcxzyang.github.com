@@ -56,7 +56,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
 
 
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yff123.com/2018/11/13/api接口笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yff123.com/2018/11/13/日常需要用到的工具以及一些package等/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cherrybeal">
@@ -282,7 +282,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/13/api接口笔记/" itemprop="url">API接口笔记</a></h1>
+                <a class="post-title-link" href="/2018/11/13/日常需要用到的工具以及一些package等/" itemprop="url">日常需要用到的工具以及一些package等</a></h1>
         
 
         <div class="post-meta">
@@ -334,23 +334,13 @@
       
         
           
-            <h1 id="API接口笔记"><a href="#API接口笔记" class="headerlink" title="API接口笔记"></a>API接口笔记</h1><h2 id="暴露问题"><a href="#暴露问题" class="headerlink" title="暴露问题"></a>暴露问题</h2><hr>
-<ul>
-<li>列表数据返回时，不能用 <code>Lesson::all()</code>方法，这样如果数据量大的时候，会给用户很不好的体验</li>
-<li>直接 <code>return Lesson</code> 返回的话，不能添加额外的信息，比如状态码(status_code),消息(message)等</li>
-<li>会把数据库里面的字段直接呈现出来，这样的话会暴露数据库的结构</li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
-<ul>
-<li>Laravel5 里面,<code>\Response::json</code>可以直接返回json格式的数据,比如        </li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">retuen \Response::json([</span><br><span class="line">	<span class="string">'status_code'</span> =&gt; <span class="number">200</span>,</span><br><span class="line">	<span class="string">'message'</span> =&gt; <span class="string">'success'</span>,</span><br><span class="line">	<span class="string">'data'</span> =&gt; $lessons</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>给需要返回的结果集添加处理方法 <code>tranForm</code>,比如        </li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">transForm</span><span class="params">($lessons)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> array_map(<span class="function"><span class="keyword">function</span><span class="params">($lesson)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> [</span><br><span class="line">			<span class="string">'title'</span> =&gt; $lesson[<span class="string">'title'</span>],</span><br><span class="line">			<span class="string">'content'</span> =&gt; $lesson[<span class="string">'body],</span></span><br><span class="line"><span class="string">			'</span>is_free<span class="string">' =&gt; $lesson['</span>free<span class="string">']</span></span><br><span class="line"><span class="string">		];</span></span><br><span class="line"><span class="string">	&#125;, $lessons-&gt;toArray());</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>当对数据进行处理时，应该建立一个专门的数据处理类 <code>Transformer.php</code> 该类的作用就是把从数据库里面查出来的数据进行字段映射。一般的，我们做API接口时，会有一个数据的列表和数据的详情，<a href="http://laravist.com" target="_blank" rel="noopener">Laravel</a>中,分别是 <code>Lesson::all()</code>和<code>Lesson::findOrFail()</code>，前者返回的是一个Collection对象，后者返回的是一个数组,当我们对其进行处理时,可以先建立一个抽象的父类，里面建立一个处理Collection对象的方法，这样可以对所有的列表进行统一的处理，然后针对每一个不同的Model，相对应的建立子类，来继承这个<code>Transformer.php</code>,这样就可以完美解决。</li>
+            <h3 id="日常需要用到的工具以及一些package等"><a href="#日常需要用到的工具以及一些package等" class="headerlink" title="日常需要用到的工具以及一些package等"></a>日常需要用到的工具以及一些package等</h3><h2 id="package"><a href="#package" class="headerlink" title="package"></a>package</h2><ul>
+<li><a href="https://github.com/overtrue/laravel-wechat" target="_blank" rel="noopener">overtrue/laravel-wechat</a> –微信SDK for laravel</li>
+<li><a href="https://github.com/overtrue/share.js" target="_blank" rel="noopener">overtrue/share.js</a> –一键分享到微博、QQ空间、QQ好友、微信、腾讯微博、豆瓣、Facebook、Twitter、Linkedin、Google+、点点等</li>
+<li><a href="https://github.com/yccphp/laravel-5-markdown-editor" target="_blank" rel="noopener">yccphp/laravel-5-markdown-editor</a> –一个基于 laravel 5 的markdown 编辑器</li>
+<li><a href="https://github.com/Intervention/image" target="_blank" rel="noopener">Intervention/image</a> –图片处理</li>
+<li><a href="https://github.com/LaravelCollective/html" target="_blank" rel="noopener">LaravelCollective/html</a> –Form and Html for laravel</li>
+<li><a href="https://disqus.com" target="_blank" rel="noopener">disqus</a> –集成评论组件</li>
 </ul>
 
           
@@ -530,7 +520,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yff123.com/2018/11/13/日常需要用到的工具以及一些package等/">
+    <link itemprop="mainEntityOfPage" href="http://yff123.com/2018/11/13/api接口笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cherrybeal">
@@ -549,7 +539,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/13/日常需要用到的工具以及一些package等/" itemprop="url">日常需要用到的工具以及一些package等</a></h1>
+                <a class="post-title-link" href="/2018/11/13/api接口笔记/" itemprop="url">API接口笔记</a></h1>
         
 
         <div class="post-meta">
@@ -601,13 +591,23 @@
       
         
           
-            <h3 id="日常需要用到的工具以及一些package等"><a href="#日常需要用到的工具以及一些package等" class="headerlink" title="日常需要用到的工具以及一些package等"></a>日常需要用到的工具以及一些package等</h3><h2 id="package"><a href="#package" class="headerlink" title="package"></a>package</h2><ul>
-<li><a href="https://github.com/overtrue/laravel-wechat" target="_blank" rel="noopener">overtrue/laravel-wechat</a> –微信SDK for laravel</li>
-<li><a href="https://github.com/overtrue/share.js" target="_blank" rel="noopener">overtrue/share.js</a> –一键分享到微博、QQ空间、QQ好友、微信、腾讯微博、豆瓣、Facebook、Twitter、Linkedin、Google+、点点等</li>
-<li><a href="https://github.com/yccphp/laravel-5-markdown-editor" target="_blank" rel="noopener">yccphp/laravel-5-markdown-editor</a> –一个基于 laravel 5 的markdown 编辑器</li>
-<li><a href="https://github.com/Intervention/image" target="_blank" rel="noopener">Intervention/image</a> –图片处理</li>
-<li><a href="https://github.com/LaravelCollective/html" target="_blank" rel="noopener">LaravelCollective/html</a> –Form and Html for laravel</li>
-<li><a href="https://disqus.com" target="_blank" rel="noopener">disqus</a> –集成评论组件</li>
+            <h1 id="API接口笔记"><a href="#API接口笔记" class="headerlink" title="API接口笔记"></a>API接口笔记</h1><h2 id="暴露问题"><a href="#暴露问题" class="headerlink" title="暴露问题"></a>暴露问题</h2><hr>
+<ul>
+<li>列表数据返回时，不能用 <code>Lesson::all()</code>方法，这样如果数据量大的时候，会给用户很不好的体验</li>
+<li>直接 <code>return Lesson</code> 返回的话，不能添加额外的信息，比如状态码(status_code),消息(message)等</li>
+<li>会把数据库里面的字段直接呈现出来，这样的话会暴露数据库的结构</li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
+<ul>
+<li>Laravel5 里面,<code>\Response::json</code>可以直接返回json格式的数据,比如        </li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">retuen \Response::json([</span><br><span class="line">	<span class="string">'status_code'</span> =&gt; <span class="number">200</span>,</span><br><span class="line">	<span class="string">'message'</span> =&gt; <span class="string">'success'</span>,</span><br><span class="line">	<span class="string">'data'</span> =&gt; $lessons</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>给需要返回的结果集添加处理方法 <code>tranForm</code>,比如        </li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">transForm</span><span class="params">($lessons)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> array_map(<span class="function"><span class="keyword">function</span><span class="params">($lesson)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> [</span><br><span class="line">			<span class="string">'title'</span> =&gt; $lesson[<span class="string">'title'</span>],</span><br><span class="line">			<span class="string">'content'</span> =&gt; $lesson[<span class="string">'body],</span></span><br><span class="line"><span class="string">			'</span>is_free<span class="string">' =&gt; $lesson['</span>free<span class="string">']</span></span><br><span class="line"><span class="string">		];</span></span><br><span class="line"><span class="string">	&#125;, $lessons-&gt;toArray());</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>当对数据进行处理时，应该建立一个专门的数据处理类 <code>Transformer.php</code> 该类的作用就是把从数据库里面查出来的数据进行字段映射。一般的，我们做API接口时，会有一个数据的列表和数据的详情，<a href="http://laravist.com" target="_blank" rel="noopener">Laravel</a>中,分别是 <code>Lesson::all()</code>和<code>Lesson::findOrFail()</code>，前者返回的是一个Collection对象，后者返回的是一个数组,当我们对其进行处理时,可以先建立一个抽象的父类，里面建立一个处理Collection对象的方法，这样可以对所有的列表进行统一的处理，然后针对每一个不同的Model，相对应的建立子类，来继承这个<code>Transformer.php</code>,这样就可以完美解决。</li>
 </ul>
 
           
