@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="For Learn">
 <meta property="og:description" content="更新源 apt-get updatesudo apt-get install -y language-pack-en-baselocale-gen en_US.UTF-8sudo apt-get install git vim  sudo apt-get install software-properties-commonsudo LC_ALL=en_US.UTF-8 add-apt-repos">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-14T11:31:03.052Z">
+<meta property="og:updated_time" content="2018-11-14T11:34:09.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu搭建环境">
 <meta name="twitter:description" content="更新源 apt-get updatesudo apt-get install -y language-pack-en-baselocale-gen en_US.UTF-8sudo apt-get install git vim  sudo apt-get install software-properties-commonsudo LC_ALL=en_US.UTF-8 add-apt-repos">
@@ -353,7 +353,7 @@
 </li>
 <li><p>安装<strong>git</strong> <code>apt-get install git</code></p>
 </li>
-<li><p>数据库允许远程连接<br> <code>GRANT ALL PRIVILEGES ON *.* TO &#39;cherrybeal&#39;@&#39;%&#39; IDENTIFIED BY &#39;jerry&#39; WITH GRANT OPTION;</code><br>修改my.conf //127.0.0.1</p>
+<li><p>数据库允许远程连接<br> <code>GRANT ALL PRIVILEGES ON *.* TO &#39;用户名&#39;@&#39;%&#39; IDENTIFIED BY &#39;密码&#39; WITH GRANT OPTION;</code><br>修改my.conf //127.0.0.1</p>
 </li>
 <li><p>nginx配置</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    try_files $uri $uri/ /index.php?$query_string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    try_files $uri /index.php =404;</span><br><span class="line">    fast_sqlit_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">    fastcgi_pass unix:/var/run/php7.2-fpm.sock;</span><br><span class="line">    fastcgi_index index.php;</span><br><span class="line">    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br><span class="line">    include fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
